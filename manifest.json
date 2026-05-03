@@ -1,0 +1,10 @@
+{
+  "display_name": "Goal Pulse",
+  "loading_order": 10,
+  "js": "index.js",
+  "css": "style.css",
+  "author": "blank242",
+  "version": "0.1.0",
+  "homePage": "",
+  "auto_update": false
+}
