@@ -114,11 +114,11 @@
 
 #goal-pulse-panel {
     box-sizing: border-box;
-    width: var(--sheldWidth);
-    margin: 0 auto;
+    width: auto;
+    margin: 0;
     padding: 0;
     border: 0;
-    border-bottom: 1px solid color-mix(in srgb, var(--SmartThemeBodyColor) 10%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--SmartThemeBodyColor) 5%, transparent);
     border-radius: 0;
     background-color: var(--SmartThemeBlurTintColor);
     color: var(--SmartThemeBodyColor);
@@ -129,8 +129,8 @@
 
 #goal-pulse-panel.goal-pulse-under-header,
 #goal-pulse-panel.goal-pulse-fixed-fallback {
-    width: var(--sheldWidth);
-    margin: 0 auto;
+    width: auto;
+    margin: 0;
     border-radius: 0;
     z-index: 3004;
 }
@@ -162,10 +162,13 @@ body.goal-pulse-has-fixed-fallback #chat {
 }
 
 .goal-pulse-header {
+    box-sizing: border-box;
     display: grid;
     grid-template-columns: minmax(0, 1fr) 22px;
     align-items: center;
     gap: var(--goal-pulse-theme-space-xs);
+    width: var(--sheldWidth);
+    margin: 0 auto;
     padding-right: 10px;
 }
 
@@ -268,7 +271,7 @@ body.goal-pulse-has-fixed-fallback #chat {
 #goal-pulse-panel .goal-pulse-icon-button:hover,
 #goal-pulse-panel .goal-pulse-row,
 #goal-pulse-panel .goal-pulse-bar {
-    background: color-mix(in srgb, var(--SmartThemeBodyColor) 10%, transparent);
+    background: color-mix(in srgb, var(--SmartThemeBodyColor) 5%, transparent);
 }
 
 .goal-pulse-header #goal-pulse-toggle {
@@ -750,14 +753,7 @@ body.goal-pulse-has-fixed-fallback #chat {
 }
 
 @media (max-width: 520px) {
-    #goal-pulse-panel {
-        width: 100vw;
-        width: 100dvw;
-        margin: 0;
-    }
-
-    #goal-pulse-panel.goal-pulse-under-header,
-    #goal-pulse-panel.goal-pulse-fixed-fallback {
+    .goal-pulse-header {
         width: 100vw;
         width: 100dvw;
         margin: 0;
