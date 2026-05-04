@@ -822,7 +822,7 @@ function openSettingsModal() {
     settingsModal = document.createElement('div');
     settingsModal.id = 'goal-pulse-modal';
     settingsModal.innerHTML = `
-        <div class="goal-pulse-modal-backdrop" data-goal-pulse-close></div>
+        <div class="goal-pulse-model-backdrop" data-goal-pulse-close></div>
         <div class="goal-pulse-modal-dialog" role="dialog" aria-modal="true" aria-label="Goal Pulse 설정">
             <div class="goal-pulse-modal-header">
                 <div class="goal-pulse-modal-title">Goal Pulse 설정</div>
