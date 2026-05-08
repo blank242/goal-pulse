@@ -22,7 +22,7 @@ const GOAL_CLOSE_TAG_RE = /<\/goal_score_update>/gi;
 const MAX_CHARACTERS = 5;
 
 const DEFAULT_SETTINGS = Object.freeze({
-    globalPromptAppend: '',
+    globalPromptAppend: 'Write score change reasons in English.',
 });
 
 const DEFAULT_CHAT_STATE = Object.freeze({
@@ -139,6 +139,7 @@ function getSettings() {
     }
 
     const settings = extension_settings[MODULE_NAME];
+    const shouldSeedGlobalPrompt = settings.globalPromptAppendDefaultSeeded === undefined;
     for (const [key, value] of Object.entries(DEFAULT_SETTINGS)) {
         if (settings[key] === undefined) {
             settings[key] = clone(value);
@@ -146,6 +147,10 @@ function getSettings() {
     }
 
     settings.globalPromptAppend = String(settings.globalPromptAppend ?? '');
+    if (shouldSeedGlobalPrompt && !settings.globalPromptAppend.trim()) {
+        settings.globalPromptAppend = DEFAULT_SETTINGS.globalPromptAppend;
+    }
+    settings.globalPromptAppendDefaultSeeded = true;
     return settings;
 }
 
@@ -690,7 +695,7 @@ function setPanelFallbackMode(panel) {
 }
 
 function updatePanelHeightVar(panel = document.getElementById('goal-pulse-panel')) {
-    const height = panel ? Math.ceil(panel.getBoundingClientRect().height) : 0;
+    const height = panel ? panel.getBoundingClientRect().height : 0;
     document.documentElement.style.setProperty('--goal-pulse-panel-height', `${height}px`);
 }
 
@@ -785,7 +790,7 @@ function renderCompactScoreItem(character, state) {
         <div class="goal-pulse-compact-item">
             <div class="goal-pulse-compact-name">${esc(character.name)}</div>
             <div class="goal-pulse-compact-score">${formatNumber(score)}${esc(state.unit)}</div>
-            ${state.showDelta ? `<div class="goal-pulse-compact-delta ${deltaClass}">${esc(deltaText)}</div>` : ''}
+            <div class="goal-pulse-compact-delta ${deltaClass}">${esc(deltaText)}</div>
         </div>
     `;
 }
@@ -806,7 +811,7 @@ function renderScoreRow(id, character, state) {
             <div class="goal-pulse-bar" role="progressbar" aria-valuenow="${score}" aria-valuemin="0" aria-valuemax="${state.maxScore}">
                 <div class="goal-pulse-bar-fill" style="width: ${percentage}%"></div>
             </div>
-            ${state.showDelta && (deltaText || reason) ? `<div class="goal-pulse-last">${esc(deltaText)}${deltaText && reason ? ' · ' : ''}${esc(reason)}</div>` : ''}
+            ${deltaText || reason ? `<div class="goal-pulse-last">${esc(deltaText)}${deltaText && reason ? ' · ' : ''}${esc(reason)}</div>` : ''}
         </div>
     `;
 }
@@ -822,7 +827,7 @@ function openSettingsModal() {
     settingsModal = document.createElement('div');
     settingsModal.id = 'goal-pulse-modal';
     settingsModal.innerHTML = `
-        <div class="goal-pulse-model-backdrop" data-goal-pulse-close></div>
+        <div class="goal-pulse-modal-backdrop" data-goal-pulse-close></div>
         <div class="goal-pulse-modal-dialog" role="dialog" aria-modal="true" aria-label="Goal Pulse 설정">
             <div class="goal-pulse-modal-header">
                 <div class="goal-pulse-modal-title">Goal Pulse 설정</div>
