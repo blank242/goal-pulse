@@ -123,7 +123,6 @@
     background-color: var(--customTopBarColor) !important;
     color: var(--SmartThemeBodyColor);
     font-family: var(--gp-font-main);
-    font-size: 0;
     box-shadow: 0 0 12px var(--gp-shadow);
     font-weight: var(--goal-pulse-theme-weight-light);
 }
